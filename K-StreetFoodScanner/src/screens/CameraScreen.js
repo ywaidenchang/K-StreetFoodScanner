@@ -1,24 +1,46 @@
-import { StyleSheet, View, Dimensions } from 'react-native';
+import { StyleSheet, View, Image } from 'react-native';
+import { useState } from 'react';
 import ImageButton from '../components/ImageButton'
 import { useNavigation } from '@react-navigation/native';
+import Icon from "react-native-vector-icons/MaterialIcons";
+import { launchImageLibrary, launchCamera } from "react-native-image-picker";
 
 const SearchImg = require("../../assets/search.png");
-const windowWidth = Dimensions.get("window").width;
+const pickImg =  require("../../assets/pick.png");
 
 const CameraScreen = (props) => {
   
   const navigator = useNavigation();
+  
+  const [ImgScreen, setImgScreen] = useState(null);
 
   return (
     <View style={styles.container}>
-      <View style={{position: 'absolute', alignContent: 'center'}}>
-        <View>
-          <ImageButton 
-            onPress={() =>{navigator.navigate("Info")}} 
-            source={SearchImg} 
-            width={75}
-            height={75} />
-        </View>
+      <View style={styles.searchBtn}>
+        <Image
+          source={ImgScreen} />
+
+        <ImageButton 
+          onPress={() => {navigator.navigate("Info")}} 
+          source={SearchImg} 
+          width={75}
+          height={75} />
+        <ImageButton
+          onPress={() => {
+            launchCamera({
+              mediaType: "photo",
+              cameraType: "back",
+            });
+            const localUri = result.assets[0].uri;
+            const uriPath = localUri.split("//").pop();
+            const imageName = localUri.split("/").pop();
+            setImgScreen("file://" + uriPath)
+
+            navigator.navigate("Info");
+          }}
+          source={pickImg}
+          width={70}
+          height={70} />
       </View>
     </View>
   );
@@ -32,8 +54,9 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   searchBtn:{
-    alignItems: "center",
-    
+    flex: 1,
+    justifyContent: 'flex-end',
+    marginBottom: "10%",
   }
 });
 
