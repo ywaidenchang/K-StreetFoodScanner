@@ -2,7 +2,6 @@ import { StyleSheet, View, Image } from 'react-native';
 import { useState } from 'react';
 import ImageButton from '../components/ImageButton'
 import { useNavigation } from '@react-navigation/native';
-import Icon from "react-native-vector-icons/MaterialIcons";
 import { launchImageLibrary, launchCamera } from "react-native-image-picker";
 
 const SearchImg = require("../../assets/search.png");
