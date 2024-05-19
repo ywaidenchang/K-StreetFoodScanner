@@ -16,31 +16,21 @@ const CameraScreen = (props) => {
 
   return (
     <View style={styles.container}>
-      <View style={styles.searchBtn}>
-        <Image
-          source={ImgScreen} />
-
-        <ImageButton 
-          onPress={() => {navigator.navigate("Info")}} 
-          source={SearchImg} 
-          width={75}
-          height={75} />
-        <ImageButton
-          onPress={() => {
-            launchCamera({
-              mediaType: "photo",
-              cameraType: "back",
-            });
-            const localUri = result.assets[0].uri;
-            const uriPath = localUri.split("//").pop();
-            const imageName = localUri.split("/").pop();
-            setImgScreen("file://" + uriPath)
-
-            navigator.navigate("Info");
-          }}
-          source={pickImg}
-          width={70}
-          height={70} />
+      <View style={styles.Btns}>
+        <View style={styles.pickBtn}>
+          <ImageButton
+            onPress={() => {}}
+            source={pickImg}
+            width={70}
+            height={70} />
+        </View>
+        <View style={styles.searchBtn}>
+          <ImageButton 
+            onPress={() => {navigator.navigate("Info")}} 
+            source={SearchImg} 
+            width={75}
+            height={75} />
+        </View>
       </View>
     </View>
   );
@@ -55,8 +45,18 @@ const styles = StyleSheet.create({
   },
   searchBtn:{
     flex: 1,
+    alignContent: "center",
     justifyContent: 'flex-end',
     marginBottom: "10%",
+  },
+  pickBtn:{
+    flex: 1,
+    alignContent: "space-evenly",
+    justifyContent: 'flex-end',
+    marginBottom: "10%",
+  },
+  Btns:{
+    
   }
 });
 

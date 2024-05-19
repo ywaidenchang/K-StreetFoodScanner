@@ -1,9 +1,15 @@
 import { StyleSheet, Text, View } from 'react-native';
+import SimpleAccordion from 'react-native-simple-accordion';
+import DescriptionAccordionView from "../components/DescriptionAccordionView";
 
 const InfoScreen = () => {
   return (
-    <View style={styles.container}>
-    </View>
+    <>
+      
+      <SimpleAccordion 
+        viewInside={<DescriptionAccordionView/>}
+        title={"Description"} />
+    </>
   );
 };
 
