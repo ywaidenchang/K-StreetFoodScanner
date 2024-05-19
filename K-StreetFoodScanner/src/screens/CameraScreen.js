@@ -44,19 +44,17 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   searchBtn:{
-    flex: 1,
-    alignContent: "center",
-    justifyContent: 'flex-end',
+    alignContent: "space-evenly",
     marginBottom: "10%",
   },
   pickBtn:{
-    flex: 1,
     alignContent: "space-evenly",
-    justifyContent: 'flex-end',
     marginBottom: "10%",
   },
   Btns:{
-    
+    flex: 1,
+    justifyContent: 'flex-end',
+
   }
 });
 
