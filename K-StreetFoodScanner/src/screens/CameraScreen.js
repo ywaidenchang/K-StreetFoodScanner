@@ -2,7 +2,7 @@ import { StyleSheet, View, Image } from 'react-native';
 import { useState } from 'react';
 import ImageButton from '../components/ImageButton'
 import { useNavigation } from '@react-navigation/native';
-import { launchImageLibrary, launchCamera } from "react-native-image-picker";
+import { CameraView } from "expo-camera"
 
 const SearchImg = require("../../assets/search.png");
 const pickImg =  require("../../assets/pick.png");
@@ -16,20 +16,22 @@ const CameraScreen = (props) => {
   return (
     <View style={styles.container}>
       <View style={styles.Btns}>
-        <View style={styles.pickBtn}>
-          <ImageButton
-            onPress={() => {}}
-            source={pickImg}
-            width={70}
-            height={70} />
-        </View>
-        <View style={styles.searchBtn}>
-          <ImageButton 
-            onPress={() => {navigator.navigate("Info")}} 
-            source={SearchImg} 
-            width={75}
-            height={75} />
-        </View>
+        <CameraView facing="back">
+          <View style={styles.pickBtn}>
+            <ImageButton
+              onPress={() => {}}
+              source={pickImg}
+              width={70}
+              height={70} />
+          </View>
+          <View style={styles.searchBtn}>
+            <ImageButton 
+              onPress={() => {navigator.navigate("Info")}} 
+              source={SearchImg} 
+              width={75}
+              height={75} />
+          </View>
+        </CameraView>
       </View>
     </View>
   );
