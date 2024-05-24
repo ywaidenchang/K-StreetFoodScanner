@@ -1,62 +1,73 @@
-import { StyleSheet, View, Image } from 'react-native';
-import { useState } from 'react';
-import ImageButton from '../components/ImageButton'
-import { useNavigation } from '@react-navigation/native';
-import { CameraView } from "expo-camera"
+import { CameraView, useCameraPermissions } from 'expo-camera';
+import { useState, useRef } from 'react';
+import { Button, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import Icon from 'react-native-vector-icons/FontAwesome6';
 
-const SearchImg = require("../../assets/search.png");
-const pickImg =  require("../../assets/pick.png");
+CameraScreen = () => {
+  const [facing, setFacing] = useState('back');
+  const [permission, requestPermission] = useCameraPermissions();
+  const cameraRef = useRef(null);
 
-const CameraScreen = (props) => {
+  if (!permission) {
+    return <View />;
+  }
+
+  if (!permission.granted) {
+    requestPermission();
+  }
+
+  function toggleCameraFacing() {
+    setFacing(current => (current === 'back' ? 'front' : 'back'));
+  }
+
   
-  const navigator = useNavigation();
-  
-  const [ImgScreen, setImgScreen] = useState(null);
+  const takePicture = async () => {
+    if (cameraRef.current) {
+      try {
+        const options = { quality: 0.5 };
+        const data = await cameraRef.current.takePictureAsync(options);
+        console.log(data.uri);
+      } catch (error) {
+        console.error(error);
+      }
+    }
+  };
 
   return (
     <View style={styles.container}>
-      <View style={styles.Btns}>
-        <CameraView facing="back">
-          <View style={styles.pickBtn}>
-            <ImageButton
-              onPress={() => {}}
-              source={pickImg}
-              width={70}
-              height={70} />
-          </View>
-          <View style={styles.searchBtn}>
-            <ImageButton 
-              onPress={() => {navigator.navigate("Info")}} 
-              source={SearchImg} 
-              width={75}
-              height={75} />
-          </View>
-        </CameraView>
-      </View>
+      <CameraView style={styles.camera} facing={facing} ref={cameraRef}>
+        <View style={styles.buttonContainer}>
+          <TouchableOpacity style={styles.button} onPress={toggleCameraFacing}>
+            <Icon name="camera-rotate" size={50} />
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.button} onPress={takePicture}>
+            <Icon name="camera" size={50} />
+          </TouchableOpacity>
+        </View>
+      </CameraView>
     </View>
   );
-};
+}
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
     justifyContent: 'center',
   },
-  searchBtn:{
-    alignContent: "space-evenly",
-    marginBottom: "10%",
-  },
-  pickBtn:{
-    alignContent: "space-evenly",
-    marginBottom: "10%",
-  },
-  Btns:{
+  camera: {
     flex: 1,
-    justifyContent: 'flex-end',
-
-  }
+  },
+  buttonContainer: {
+    flex: 1,
+    flexDirection: 'row',
+    backgroundColor: 'transparent',
+    margin: 64,
+  },
+  button: {
+    flex: 1,
+    alignSelf: 'flex-end',
+    alignItems: 'center',
+  },
 });
 
 export default CameraScreen;
