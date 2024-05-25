@@ -2,8 +2,7 @@ import { CameraView, useCameraPermissions } from 'expo-camera';
 import { useState, useRef } from 'react';
 import { StyleSheet, TouchableOpacity, View } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome6';
-import * as Clipboard from 'expo-clipboard';
-
+import axios from 'axios';
 
 CameraScreen = () => {
   const [facing, setFacing] = useState('back');
@@ -25,28 +24,36 @@ CameraScreen = () => {
   const takePicture = async () => {
     if (cameraRef.current) {
       try {
-        const options = { quality: 0.5 }; // Adjust quality as needed (0-1)
+        const options = { quality: 0.5, base64: true }; // Adjust quality as needed (0-1)
         const data = await cameraRef.current.takePictureAsync(options);
-        const base64Data = await new Promise((resolve) => {
-          const xhr = new XMLHttpRequest();
-          xhr.open('GET', data.uri, true);
-          xhr.responseType = 'blob';
-          xhr.onload = function () {
-            const reader = new FileReader();
-            reader.onloadend = function () {
-              resolve(btoa(reader.result));
-            };
-            reader.readAsDataURL(xhr.response);
-          };
-          xhr.send();
-        });
-        
-        // (Optional) Handle or store the base64 data as needed
-        Clipboard.setStringAsync(base64Data);
+        const base64Data = data.base64;
+
+        sendRoboflowRequest(base64Data);
+
       } catch (error) {
         console.error(error);
       }
     }
+  };
+
+  function sendRoboflowRequest(data) {
+    axios({
+      method: "POST",
+      url: "https://detect.roboflow.com/k-street-food-scanner/11",
+      params: {
+        api_key: "Xk1dBd1GnSB7NsJsI2fF"
+      },
+      data: data,
+      headers: {
+        "Content-Type": "application/x-www-form-urlencoded"
+      }
+    })
+    .then(function(response) {
+      console.log(response.data);
+    })
+    .catch(function(error) {
+      console.log(error.message);
+    });
   };
 
   return (
