@@ -7,7 +7,7 @@ const InfoScreen = () => {
     <>
       <Image/>
       <SimpleAccordion 
-        viewInside={<DescriptionAccordionView/>}
+        viewInside={<DescriptionAccordionView value="" />}
         title={"Description"} />
     </>
   );

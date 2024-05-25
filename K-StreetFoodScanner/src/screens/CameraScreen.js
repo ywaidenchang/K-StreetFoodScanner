@@ -1,13 +1,17 @@
 import { CameraView, useCameraPermissions } from 'expo-camera';
 import { useState, useRef } from 'react';
-import { StyleSheet, TouchableOpacity, View } from 'react-native';
+import { StyleSheet, TouchableOpacity, View, Alert } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome6';
 import axios from 'axios';
+import { useNavigation } from '@react-navigation/native';
 
-CameraScreen = () => {
+const CameraScreen = () => {
   const [facing, setFacing] = useState('back');
   const [permission, requestPermission] = useCameraPermissions();
   const cameraRef = useRef(null);
+  const navigation = useNavigation();
+  const [roboflowResult, setRoboflowResult] = useState(null);
+  const [errorMsg, setErrorMsg] = useState(null);
 
   if (!permission) {
     return <View />;
@@ -29,6 +33,7 @@ CameraScreen = () => {
         const base64Data = data.base64;
 
         sendRoboflowRequest(base64Data);
+        navigation.navigate("Info", {data: roboflowResult});
 
       } catch (error) {
         console.error(error);
@@ -49,10 +54,16 @@ CameraScreen = () => {
       }
     })
     .then(function(response) {
-      console.log(response.data);
+      let result = response.data.predictions;
+      console.log(result);
+
+      setRoboflowResult(JSON.stringify(result));      
     })
     .catch(function(error) {
-      console.log(error.message);
+      let errorMsg = error.message;
+      console.log(errorMsg);
+
+      setErrorMsg("Error Ocurred\nError Message: " + errorMsg);
     });
   };
 
