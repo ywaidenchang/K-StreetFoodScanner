@@ -77,6 +77,9 @@ const CameraScreen = () => {
           <TouchableOpacity style={styles.button} onPress={takePicture}>
             <Icon name="camera" size={50} />
           </TouchableOpacity>
+          <TouchableOpacity>
+            <Icon name="images" />
+          </TouchableOpacity>
         </View>
       </CameraView>
     </View>
