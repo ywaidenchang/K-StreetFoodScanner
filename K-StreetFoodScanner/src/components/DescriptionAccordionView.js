@@ -1,9 +1,9 @@
 import { StyleSheet, Text, View } from 'react-native';
 
-const DescriptionAccordionView = (value) => {
+const DescriptionAccordionView = () => {
   return (
     <View>
-      <Text>{value}</Text>
+      <Text>hello</Text>
     </View>
   );
 };
