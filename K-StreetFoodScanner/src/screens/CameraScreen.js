@@ -1,6 +1,6 @@
 import { CameraView, useCameraPermissions } from 'expo-camera';
 import { useState, useRef } from 'react';
-import { StyleSheet, TouchableOpacity, View, Alert } from 'react-native';
+import { StyleSheet, TouchableOpacity, View, Text } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome6';
 import axios from 'axios';
 import { useNavigation } from '@react-navigation/native';
@@ -81,7 +81,7 @@ const CameraScreen = () => {
           <TouchableOpacity style={styles.button} onPress={takePicture}>
             <Icon name="camera" size={50} />
           </TouchableOpacity>
-          <TouchableOpacity>
+          <TouchableOpacity style={styles.button}>
             <Icon name="images" />
           </TouchableOpacity>
         </View>

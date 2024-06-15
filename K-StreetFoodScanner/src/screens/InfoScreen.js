@@ -3,7 +3,6 @@ import SimpleAccordion from 'react-native-simple-accordion';
 import DescriptionAccordionView from "../components/DescriptionAccordionView";
 
 const InfoScreen = (route) => {
-  const { data } = route.params;
   return (
     <>
       <Image/>
