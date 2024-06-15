@@ -28,7 +28,7 @@ const CameraScreen = () => {
   const takePicture = async () => {
     if (cameraRef.current) {
       try {
-        const options = { quality: 0.8, base64: true }; // Adjust quality as needed (0-1)
+        const options = { quality: 0.8, base64: true };   // Quality: 0~1
         const data = await cameraRef.current.takePictureAsync(options);
         const base64Data = data.base64;
 
