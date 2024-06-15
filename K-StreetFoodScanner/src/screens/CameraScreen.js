@@ -15,9 +15,7 @@ const CameraScreen = () => {
 
   if (!permission) {
     return (
-      <View>
-        <Text>Getting Camera Permission.........</Text>
-      </View>
+      <View />
     );
   }
 
@@ -76,13 +74,13 @@ const CameraScreen = () => {
       <CameraView style={styles.camera} facing={facing} ref={cameraRef}>
         <View style={styles.buttonContainer}>
           <TouchableOpacity style={styles.button} onPress={toggleCameraFacing}>
-            <Icon name="camera-rotate" size={50} />
+            <Icon name="camera-rotate" size={40} />
           </TouchableOpacity>
           <TouchableOpacity style={styles.button} onPress={takePicture}>
             <Icon name="camera" size={50} />
           </TouchableOpacity>
           <TouchableOpacity style={styles.button}>
-            <Icon name="images" />
+            <Icon name="images" size={40} />
           </TouchableOpacity>
         </View>
       </CameraView>
