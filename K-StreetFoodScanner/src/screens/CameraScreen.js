@@ -14,7 +14,11 @@ const CameraScreen = () => {
   const [errorMsg, setErrorMsg] = useState(null);
 
   if (!permission) {
-    return <View />;
+    return (
+      <View>
+        <Text>Getting Camera Permission.........</Text>
+      </View>
+    );
   }
 
   if (!permission.granted) {
