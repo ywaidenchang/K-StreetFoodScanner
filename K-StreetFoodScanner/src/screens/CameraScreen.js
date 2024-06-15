@@ -35,7 +35,7 @@ const CameraScreen = () => {
         const base64Data = data.base64;
 
         sendRoboflowRequest(base64Data);
-        navigation.navigate("Info", {data: roboflowResult});
+        setTimeout(navigation.navigate("Info", {data: roboflowResult}), 5000)
 
       } catch (error) {
         console.error(error);
@@ -59,7 +59,7 @@ const CameraScreen = () => {
       let result = response.data.predictions;
       console.log(result);
 
-      setRoboflowResult(JSON.stringify(result));      
+      setRoboflowResult(JSON.stringify(result));   
     })
     .catch(function(error) {
       let errorMsg = error.message;
