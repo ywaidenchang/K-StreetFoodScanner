@@ -1,9 +1,9 @@
 import { CameraView, useCameraPermissions } from 'expo-camera';
 import { useState, useRef } from 'react';
-import { StyleSheet, TouchableOpacity, View, Text } from 'react-native';
-import Icon from 'react-native-vector-icons/FontAwesome6';
+import { StyleSheet, View } from 'react-native';
 import axios from 'axios';
 import { useNavigation } from '@react-navigation/native';
+import { IconButton } from "../components/IconButton";
 
 const CameraScreen = () => {
   const [facing, setFacing] = useState('back');
@@ -73,15 +73,9 @@ const CameraScreen = () => {
     <View style={styles.container}>
       <CameraView style={styles.camera} facing={facing} ref={cameraRef}>
         <View style={styles.buttonContainer}>
-          <TouchableOpacity style={styles.button} onPress={toggleCameraFacing}>
-            <Icon name="camera-rotate" size={40} />
-          </TouchableOpacity>
-          <TouchableOpacity style={styles.button} onPress={takePicture}>
-            <Icon name="camera" size={50} />
-          </TouchableOpacity>
-          <TouchableOpacity style={styles.button}>
-            <Icon name="images" size={40} />
-          </TouchableOpacity>
+          <IconButton iconName="camera-rotate" size={40} onPress={toggleCameraFacing} />
+          <IconButton iconName="camera" size={50} onPress={takePicture} />
+          <IconButton iconName="images" size={40} onPress={() => {console.log("응")}} />
         </View>
       </CameraView>
     </View>
@@ -101,11 +95,6 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     backgroundColor: 'transparent',
     margin: 64,
-  },
-  button: {
-    flex: 1,
-    alignSelf: 'flex-end',
-    alignItems: 'center',
   },
 });
 
