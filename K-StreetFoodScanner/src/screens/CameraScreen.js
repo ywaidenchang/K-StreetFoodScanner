@@ -3,7 +3,7 @@ import { useState, useRef } from 'react';
 import { StyleSheet, View } from 'react-native';
 import axios from 'axios';
 import { useNavigation } from '@react-navigation/native';
-import { IconButton } from "../components/IconButton";
+import IconButton from "../components/IconButton";
 
 const CameraScreen = () => {
   const [facing, setFacing] = useState('back');
