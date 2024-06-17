@@ -34,7 +34,7 @@ const CameraScreen = () => {
         const data = await cameraRef.current.takePictureAsync(options);
         const base64Data = data.base64;
 
-        sendRoboflowRequest(base64Data);
+        predict(base64Data);
 
       } catch (error) {
         console.error(error);
@@ -42,7 +42,7 @@ const CameraScreen = () => {
     }
   };
 
-  function sendRoboflowRequest(data) {
+  function predict(data) {
     axios({
       method: "POST",
       url: "https://detect.roboflow.com/k-street-food-scanner/11",
