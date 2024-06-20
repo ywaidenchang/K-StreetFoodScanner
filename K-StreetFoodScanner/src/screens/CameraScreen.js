@@ -10,8 +10,8 @@ const CameraScreen = () => {
   const [permission, requestPermission] = useCameraPermissions();
   const cameraRef = useRef(null);
   const navigation = useNavigation();
-  const [roboflowResult, setRoboflowResult] = useState(null);
   const [errorMsg, setErrorMsg] = useState(null);
+  const [resultName, setResultName] = useState(null);
 
   if (!permission) {
     return (
@@ -35,7 +35,6 @@ const CameraScreen = () => {
         const base64Data = data.base64;
 
         predict(base64Data);
-
       } catch (error) {
         console.error(error);
       }
@@ -55,12 +54,11 @@ const CameraScreen = () => {
       }
     })
     .then(function(response) {
-      let result = response.data.predictions;
-      console.log(result);
+      let name = response.data.predictions[0].class;
+      console.log(name);
+      setResultName(JSON.stringify(name));
 
-      setRoboflowResult(result)
-      
-      navigation.navigate("Info", {data:roboflowResult});
+      navigation.navigate("Info", {name: resultName})   
     })
     .catch(function(error) {
       let errorMsg = error.message;
