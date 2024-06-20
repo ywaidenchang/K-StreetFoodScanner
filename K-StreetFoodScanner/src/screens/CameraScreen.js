@@ -10,8 +10,8 @@ const CameraScreen = () => {
   const [permission, requestPermission] = useCameraPermissions();
   const cameraRef = useRef(null);
   const navigation = useNavigation();
-  const [roboflowResult, setRoboflowResult] = useState(null);
   const [errorMsg, setErrorMsg] = useState(null);
+  const [resultName, setResultName] = useState(null);
 
   if (!permission) {
     return (
@@ -34,16 +34,14 @@ const CameraScreen = () => {
         const data = await cameraRef.current.takePictureAsync(options);
         const base64Data = data.base64;
 
-        sendRoboflowRequest(base64Data);
-        setTimeout(navigation.navigate("Info", {data: roboflowResult}), 5000)
-
+        predict(base64Data);
       } catch (error) {
         console.error(error);
       }
     }
   };
 
-  function sendRoboflowRequest(data) {
+  function predict(data) {
     axios({
       method: "POST",
       url: "https://detect.roboflow.com/k-street-food-scanner/11",
@@ -56,10 +54,11 @@ const CameraScreen = () => {
       }
     })
     .then(function(response) {
-      let result = response.data.predictions;
-      console.log(result);
+      let name = response.data.predictions[0].class;
+      console.log(name);
+      setResultName(JSON.stringify(name));
 
-      setRoboflowResult(JSON.stringify(result));   
+      navigation.navigate("Info", {name: resultName})   
     })
     .catch(function(error) {
       let errorMsg = error.message;

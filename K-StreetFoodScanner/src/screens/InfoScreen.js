@@ -5,13 +5,14 @@ import { useRoute } from "@react-navigation/native"
 
 const InfoScreen = () => {
   const route = useRoute();
-  const data = route.params.data;
+  const name = route.params.name;
 
   return (
     <>
       <Image/>
+      <Text>{name==null ? "NO FOOD DETECTED" : name}</Text>
       <SimpleAccordion 
-        viewInside={<Text>{data}</Text>}    //<DescriptionAccordionView />
+        viewInside={<Text></Text>}    //<DescriptionAccordionView />
         title={"Description"} />
     </>
   );
