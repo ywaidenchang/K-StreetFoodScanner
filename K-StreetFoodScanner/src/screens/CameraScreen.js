@@ -57,7 +57,7 @@ const CameraScreen = () => {
     .then(function(response) {
       let name = response.data.predictions[0].class;
       console.log(name);
-      setResultName(JSON.stringify(name));
+      setResultName(name);
 
       navigation.navigate("Info", {name: resultName})   
     })

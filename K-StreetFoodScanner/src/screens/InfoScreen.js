@@ -1,4 +1,4 @@
-import { Image, Text } from 'react-native';
+import { Image, Text, StyleSheet } from 'react-native';
 import SimpleAccordion from 'react-native-simple-accordion';
 import DescriptionAccordionView from "../components/DescriptionAccordionView";
 import { useRoute } from "@react-navigation/native"
@@ -10,12 +10,18 @@ const InfoScreen = () => {
   return (
     <>
       <Image/>
-      <Text>{name==null ? "NO FOOD DETECTED" : name}</Text>
+      <Text style={styles.title}>{name ? name.replace(/\"/gi, "") : "NO FOOD DETECTED"}</Text>
       <SimpleAccordion 
         viewInside={<Text></Text>}    //<DescriptionAccordionView />
         title={"Description"} />
     </>
   );
 };
+
+const styles = StyleSheet.create({
+  title: {
+    fontSize: 20
+  },
+});
 
 export default InfoScreen;
