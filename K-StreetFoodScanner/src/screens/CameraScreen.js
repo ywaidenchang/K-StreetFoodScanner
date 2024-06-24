@@ -55,7 +55,7 @@ const CameraScreen = () => {
       }
     })
     .then(function(response) {
-      let name = response.data.predictions[0].class;
+      let name = JSON.stringify(response.data.predictions[0].class);
       console.log(name);
       setResultName(name);
 
