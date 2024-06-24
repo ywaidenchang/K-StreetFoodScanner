@@ -13,6 +13,7 @@ const CameraScreen = () => {
   const [errorMsg, setErrorMsg] = useState(null);
   const [resultName, setResultName] = useState(null);
 
+
   if (!permission) {
     return (
       <View />

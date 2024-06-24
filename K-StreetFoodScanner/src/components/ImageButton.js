@@ -1,12 +1,12 @@
-import { Image, Pressable } from 'react-native';
+import { Image, TouchableOpacity } from 'react-native';
 
 const ImageButton = ({onPress, source, width, height, style}) => {
   return (
-    <Pressable onPress={onPress}>
+    <TouchableOpacity onPress={onPress}>
       <Image
       source={source}
       style={[{width: width, height: height}, style]} />
-    </Pressable>
+    </TouchableOpacity>
   );
 };
 
