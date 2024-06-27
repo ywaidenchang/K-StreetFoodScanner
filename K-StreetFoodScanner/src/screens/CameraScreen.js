@@ -1,7 +1,6 @@
 import { CameraView, useCameraPermissions } from 'expo-camera';
 import { useState, useRef } from 'react';
 import { StyleSheet, View } from 'react-native';
-import axios from 'axios';
 import { useNavigation } from '@react-navigation/native';
 import IconButton from "../components/IconButton";
 
@@ -35,39 +34,13 @@ const CameraScreen = () => {
         const data = await cameraRef.current.takePictureAsync(options);
         const base64Data = data.base64;
 
-        predict(base64Data);
+        navigation.navigate("Info", {data:base64Data});
       } catch (error) {
         console.error(error);
       }
     }
   };
 
-  function predict(data) {
-    axios({
-      method: "POST",
-      url: "https://detect.roboflow.com/k-street-food-scanner/11",
-      params: {
-        api_key: "Xk1dBd1GnSB7NsJsI2fF"
-      },
-      data: data,
-      headers: {
-        "Content-Type": "application/x-www-form-urlencoded"
-      }
-    })
-    .then(function(response) {
-      let name = JSON.stringify(response.data.predictions[0].class);
-      console.log(name);
-      setResultName(name);
-
-      navigation.navigate("Info", {name: resultName})   
-    })
-    .catch(function(error) {
-      let errorMsg = error.message;
-      console.log(errorMsg);
-
-      setErrorMsg("Error Ocurred\nError Message: " + errorMsg);
-    });
-  };
 
   return (
     <View style={styles.container}>

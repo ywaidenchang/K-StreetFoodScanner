@@ -1,17 +1,44 @@
 import { Image, Text, StyleSheet, View } from 'react-native';
+import { useState } from 'react';
 import SimpleAccordion from 'react-native-simple-accordion';
 import DescriptionAccordionView from "../components/DescriptionAccordionView";
 import { useRoute } from "@react-navigation/native"
+import axios from 'axios';
 
 const InfoScreen = () => {
   const route = useRoute();
-  const name = route.params.name;
+  const data = route.params.data;
+  const [resultName, setResultName] = useState(null);
+
+  function predict(data) {
+    axios({
+      method: "POST",
+      url: "https://detect.roboflow.com/k-street-food-scanner/11",
+      params: {
+        api_key: "Xk1dBd1GnSB7NsJsI2fF"
+      },
+      data: data,
+      headers: {
+        "Content-Type": "application/x-www-form-urlencoded"
+      }
+    })
+    .then(function(response) {
+      let name = JSON.stringify(response.data.predictions[0].class);
+      console.log(name)
+      return name;
+    })
+    .catch(function(error) {
+      let errorMsg = error.message;
+      console.log(errorMsg);
+    });
+  };
 
   return (
     <>
+      {setResultName(predict(data))}
       <Image/>
       <View style={styles.container}>
-        <Text style={styles.title}>{name=="null" ? "NO FOOD DETECTED" :  name.replace(/\"/gi, "")}</Text>
+        <Text style={styles.title}>{resultName==null ? "NO FOOD DETECTED" :  resultName}</Text>
       </View>
       <SimpleAccordion 
         viewInside={<Text></Text>}    //<DescriptionAccordionView />
@@ -24,7 +51,7 @@ const styles = StyleSheet.create({
   container: {
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#fff', // Adjust background color as needed
+    backgroundColor: '#fff',
     padding: 10,
   },
   title: {
