@@ -40,7 +40,7 @@ const InfoScreen = () => {
     <>
       <Image/>
       <View style={styles.container}>
-        <Text style={styles.title}>{resultName==null ? "NO FOOD DETECTED" :  resultName}</Text>
+        <Text style={styles.title}>{resultName==null ? "NO FOOD DETECTED" :  resultName.replace(/\"/gi, "")}</Text>
       </View>
       <SimpleAccordion 
         viewInside={<Text></Text>}    //<DescriptionAccordionView />
