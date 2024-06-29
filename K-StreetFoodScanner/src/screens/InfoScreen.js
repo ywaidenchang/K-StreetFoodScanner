@@ -24,6 +24,7 @@ const InfoScreen = () => {
     })
     .then(function(response) {
       let name = JSON.stringify(response.data.predictions[0].class);
+      setResultName(name);
       console.log(name)
       return name;
     })
@@ -33,9 +34,10 @@ const InfoScreen = () => {
     });
   };
 
+  predict(data);
+
   return (
     <>
-      {setResultName(predict(data))}
       <Image/>
       <View style={styles.container}>
         <Text style={styles.title}>{resultName==null ? "NO FOOD DETECTED" :  resultName}</Text>

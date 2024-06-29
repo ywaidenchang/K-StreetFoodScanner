@@ -17,7 +17,6 @@
     "axios": "^1.7.2",
     "expo": "^51.0.8",
     "expo-cli": "^6.3.10",
-    "expo-clipboard": "~6.0.3",
     "expo-media-library": "~16.0.3",
     "expo-status-bar": "~1.12.1",
     "expo-camera": "~15.0.11",
