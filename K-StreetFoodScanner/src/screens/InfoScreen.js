@@ -12,6 +12,7 @@ const InfoScreen = () => {
   const [isLoading, setIsLoading] = useState(true);
 
   function predict(data) {
+    console.log(data);
     axios({
       method: "POST",
       url: "https://detect.roboflow.com/k-street-food-scanner/11",
@@ -25,11 +26,8 @@ const InfoScreen = () => {
     })
     .then(function(response) {
       let name = JSON.stringify(response.data.predictions[0].class);
-      setResultName(name);
-      console.log(name);
       setIsLoading(false);
-
-      return name;
+      setResultName(name);
     })
     .catch(function(error) {
       let errorMsg = error.message;
@@ -38,7 +36,6 @@ const InfoScreen = () => {
   };
 
   predict(data);
-
 
   if (isLoading == true){
     return (

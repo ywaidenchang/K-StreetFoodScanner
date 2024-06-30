@@ -35,6 +35,12 @@
         {
           "cameraPermission": "Allow $(PRODUCT_NAME) to access your camera"
         }
+      ],
+      [
+        "expo-image-picker",
+        {
+          "photoPermission": "The app accesses your photo"
+        }
       ]
     ],
     "extra": {
