@@ -78,7 +78,8 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     textAlign: 'center',
     marginBottom: 20,
-    color: '#333'
+    color: '#333',
+    textTransform: 'uppercase'
   },
   loading: {
     flex: 5,
