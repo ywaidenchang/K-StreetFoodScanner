@@ -9,6 +9,7 @@ const InfoScreen = () => {
   const route = useRoute();
   const data = route.params.data;
   const [resultName, setResultName] = useState(null);
+  const [isLoading, setIsLoading] = useState(true);
 
   function predict(data) {
     axios({
@@ -25,7 +26,9 @@ const InfoScreen = () => {
     .then(function(response) {
       let name = JSON.stringify(response.data.predictions[0].class);
       setResultName(name);
-      console.log(name)
+      console.log(name);
+      setIsLoading(false);
+
       return name;
     })
     .catch(function(error) {
@@ -36,18 +39,25 @@ const InfoScreen = () => {
 
   predict(data);
 
-  return (
-    <>
-      <ActivityIndicator size="large" animating={true} />
-      <Image/>
-      <View style={styles.container}>
-        <Text style={styles.title}>{resultName==null ? "NO FOOD DETECTED" :  resultName.replace(/\"/gi, "")}</Text>
-      </View>
-      <SimpleAccordion 
-        viewInside={<Text></Text>}    //<DescriptionAccordionView />
-        title={"Description"} />
-    </>
-  );
+
+  if (isLoading == true){
+    return (
+      <ActivityIndicator size="large" animating={true} color="#108de6" />
+    );
+  }
+  else {
+    return (
+      <>
+        <Image/>
+        <View style={styles.container}>
+          <Text style={styles.title}>{resultName==null ? "NO FOOD DETECTED" :  resultName.replace(/\"/gi, "")}</Text>
+        </View>
+        <SimpleAccordion 
+          viewInside={<Text></Text>}    //<DescriptionAccordionView />
+          title={"Description"} />
+      </>
+    );
+  }
 };
 
 const styles = StyleSheet.create({
