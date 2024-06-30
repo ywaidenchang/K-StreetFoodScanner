@@ -2,7 +2,7 @@ import { Image, Text, StyleSheet, View, ActivityIndicator } from 'react-native';
 import { useState } from 'react';
 import SimpleAccordion from 'react-native-simple-accordion';
 import DescriptionAccordionView from "../components/DescriptionAccordionView";
-import { useRoute } from "@react-navigation/native"
+import { CurrentRenderContext, useRoute } from "@react-navigation/native"
 import axios from 'axios';
 
 const InfoScreen = () => {
@@ -42,7 +42,13 @@ const InfoScreen = () => {
 
   if (isLoading == true){
     return (
-      <ActivityIndicator size="large" animating={true} color="#108de6" />
+      <>
+        <ActivityIndicator size="large" animating={true} color="#108de6" style={styles.loading} />
+        <Text style={styles.text}>
+          I'm thinking......
+          Please wait
+        </Text>
+      </>
     );
   }
   else {
@@ -74,6 +80,15 @@ const styles = StyleSheet.create({
     marginBottom: 20,
     color: '#333'
   },
+  loading: {
+    flex: 5,
+    transform: [{ scaleX: 2.3 }, { scaleY: 2.3 }]
+  },
+  text: {
+    flex: 3,
+    fontSize: 20,
+    textAlign: 'center',
+  }
 });
 
 export default InfoScreen;
