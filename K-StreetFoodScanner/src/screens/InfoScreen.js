@@ -1,4 +1,4 @@
-import { Image, Text, StyleSheet, View } from 'react-native';
+import { Image, Text, StyleSheet, View, ActivityIndicator } from 'react-native';
 import { useState } from 'react';
 import SimpleAccordion from 'react-native-simple-accordion';
 import DescriptionAccordionView from "../components/DescriptionAccordionView";
@@ -38,6 +38,7 @@ const InfoScreen = () => {
 
   return (
     <>
+      <ActivityIndicator size="large" animating={true} />
       <Image/>
       <View style={styles.container}>
         <Text style={styles.title}>{resultName==null ? "NO FOOD DETECTED" :  resultName.replace(/\"/gi, "")}</Text>
