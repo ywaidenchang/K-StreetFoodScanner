@@ -10,6 +10,7 @@ const InfoScreen = () => {
   const data = route.params.data;
   const [resultName, setResultName] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
+  const [description, setDescription] = useState(null);
 
   function predict(data) {
     console.log(data);
@@ -36,6 +37,17 @@ const InfoScreen = () => {
   };
 
   predict(data);
+
+  axios.get("../../data.json")
+  .then(response => {
+    console.log(response);
+
+    setDescription(JSON.stringify(response.data.resultName["description"]))
+    console.log(description)
+  })
+  .catch(error => {
+    console.log(error)
+  })
 
   if (isLoading == true){
     return (
