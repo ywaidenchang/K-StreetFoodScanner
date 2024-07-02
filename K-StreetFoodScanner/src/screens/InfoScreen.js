@@ -1,8 +1,8 @@
 import { Image, Text, StyleSheet, View, ActivityIndicator } from 'react-native';
 import { useState } from 'react';
 import SimpleAccordion from 'react-native-simple-accordion';
-import DescriptionAccordionView from "../components/DescriptionAccordionView";
-import { CurrentRenderContext, useRoute } from "@react-navigation/native"
+//import DescriptionAccordionView from "../components/DescriptionAccordionView";
+import { useRoute } from "@react-navigation/native"
 import axios from 'axios';
 
 const InfoScreen = () => {
@@ -11,9 +11,9 @@ const InfoScreen = () => {
   const [resultName, setResultName] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const [description, setDescription] = useState(null);
+  const [isError, setIsError] = useState(false)
 
   function predict(data) {
-    console.log(data);
     axios({
       method: "POST",
       url: "https://detect.roboflow.com/k-street-food-scanner/11",
@@ -33,6 +33,7 @@ const InfoScreen = () => {
     .catch(function(error) {
       let errorMsg = error.message;
       console.log(errorMsg);
+      setIsError(true);
     });
   };
 
@@ -47,18 +48,29 @@ const InfoScreen = () => {
   })
   .catch(error => {
     console.log(error)
+    setIsError(true)
   })
 
-  if (isLoading == true){
+  if (isError || (isError==true && isLoading==true)) {
     return (
       <>
         <ActivityIndicator size="large" animating={true} color="#108de6" style={styles.loading} />
-        <Text style={styles.text}>
-          I'm thinking......
-          Please wait
-        </Text>
+        <Text style={styles.text}>An Error occured while I'm thinking{"\n"}</Text>
+        <Text style={{textAlign: "center", flex: 4, color: "#f72900"}}>(Maybe you should check internet connection)</Text>
       </>
     );
+  } else if (isLoading && isError==true){
+    if (isLoading == true){
+      return (
+        <>
+          <ActivityIndicator size="large" animating={true} color="#108de6" style={styles.loading} />
+          <Text style={styles.text}>
+            I'm thinking......
+            Please wait
+          </Text>
+        </>
+      );
+    }
   }
   else {
     return (
