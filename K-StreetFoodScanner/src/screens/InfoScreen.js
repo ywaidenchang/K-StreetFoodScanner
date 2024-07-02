@@ -54,9 +54,9 @@ const InfoScreen = () => {
   if (isError || (isError==true && isLoading==true)) {
     return (
       <>
-        <ActivityIndicator size="large" animating={true} color="#108de6" style={styles.loading} />
-        <Text style={styles.text}>An Error occured while I'm thinking{"\n"}</Text>
-        <Text style={{textAlign: "center", flex: 4, color: "#f72900"}}>(Maybe you should check internet connection)</Text>
+        <View style={{flex: 3}}></View>
+        <Text style={styles.text}>An Error occured while I'm thinking{"\n"}Please try again</Text>
+        <Text style={{textAlign: "center", flex: 3, color: "#f72900"}}>(Maybe you should check internet connection)</Text>
       </>
     );
   } else if (isLoading && isError==true){
