@@ -11,8 +11,8 @@ const InfoScreen = () => {
   const [resultName, setResultName] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const [description, setDescription] = useState(null);
-  const [isError, setIsError] = useState(false)
-
+  const [isError, setIsError] = useState(false);
+  
   function predict(data) {
     axios({
       method: "POST",
