@@ -8,7 +8,6 @@ import * as ImagePicker from 'expo-image-picker';
 const CameraScreen = () => {
   const [facing, setFacing] = useState('back');
   const [permission, requestPermission] = useCameraPermissions();
-  const [status, requestPhotoPermission] = ImagePicker.useMediaLibraryPermissions();
   const cameraRef = useRef(null);
   const navigation = useNavigation();
 
