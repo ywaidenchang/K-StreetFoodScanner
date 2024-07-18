@@ -43,7 +43,7 @@ const InfoScreen = () => {
   .then(response => {
     console.log(response);
 
-    setDescription(JSON.stringify(response.data.resultName["description"]))
+    setDescription("test")//JSON.stringify(response.data.resultName["description"]))
     console.log(description)
   })
   .catch(error => {
@@ -59,20 +59,19 @@ const InfoScreen = () => {
         <Text style={{textAlign: "center", flex: 3, color: "#f72900"}}>(Maybe you should check internet connection)</Text>
       </>
     );
-  } else if (isLoading && isError==true){
-    if (isLoading == true){
+  } else if (isLoading && isError==false){
       return (
-        <>
-          <ActivityIndicator size="large" animating={true} color="#108de6" style={styles.loading} />
-          <Text style={styles.text}>
-            I'm thinking......
-            Please wait
-          </Text>
-        </>
-      );
-    }
+      <>
+        <ActivityIndicator size="large" animating={true} color="#108de6" style={styles.loading} />
+        <Text style={styles.text}>
+          I'm thinking......
+          Please wait
+        </Text>
+      </>
+    );
+    
   }
-  else {
+  else if (isError==false && isLoading==false) {
     return (
       <>
         <Image/>
