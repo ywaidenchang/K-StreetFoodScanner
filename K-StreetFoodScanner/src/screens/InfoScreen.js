@@ -65,7 +65,7 @@ const InfoScreen = () => {
         <View style={styles.container}>
           <Text style={styles.title}>{resultName==null ? "NO FOOD DETECTED" :  resultName.replace(/\"/gi, "")}</Text>
         </View>
-        <Text>{gemini("describe me about ${resultName}")}</Text>
+        <Text>{}</Text>
       </>
     );
   }
