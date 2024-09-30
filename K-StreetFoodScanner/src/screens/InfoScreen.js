@@ -1,9 +1,8 @@
 import { Image, Text, StyleSheet, View, ActivityIndicator } from 'react-native';
 import { useState } from 'react';
-import SimpleAccordion from 'react-native-simple-accordion';
-//import DescriptionAccordionView from "../components/DescriptionAccordionView";
 import { useRoute } from "@react-navigation/native"
 import axios from 'axios';
+import { gemini } from '../scripts/geminiApi';
 
 const InfoScreen = () => {
   const route = useRoute();
@@ -39,18 +38,6 @@ const InfoScreen = () => {
 
   predict(data);
 
-  axios.get("../../data.json")
-  .then(response => {
-    console.log(response);
-
-    setDescription("test")//JSON.stringify(response.data.resultName["description"]))
-    console.log(description)
-  })
-  .catch(error => {
-    console.log(error)
-    setIsError(true)
-  })
-
   if (isError || (isError==true && isLoading==true)) {
     return (
       <>
@@ -78,9 +65,7 @@ const InfoScreen = () => {
         <View style={styles.container}>
           <Text style={styles.title}>{resultName==null ? "NO FOOD DETECTED" :  resultName.replace(/\"/gi, "")}</Text>
         </View>
-        <SimpleAccordion 
-          viewInside={<Text></Text>}    //<DescriptionAccordionView />
-          title={"Description"} />
+        <Text>{gemini("describe me about ${resultName}")}</Text>
       </>
     );
   }
