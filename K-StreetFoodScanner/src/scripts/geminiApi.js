@@ -1,41 +1,12 @@
-import axios from 'axios';
+import { GoogleGenerativeAI } from "@google/generative-ai";
 
-const API_URL = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent';
-const API_KEY = 'AIzaSyCh_rsJNWhFdPeK7ef7nNEBEVHxfSqwOdM';
+async function gemini(prompt) {
+  const genAI = new GoogleGenerativeAI("AIzaSyCh_rsJNWhFdPeK7ef7nNEBEVHxfSqwOdM");
+  const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
 
-async function gemini(userMessage) {
-    try {
-      const response = await axios.post(
-        `${API_URL}?key=${API_KEY}`,
-        {
-          contents: [
-            {
-              parts: [
-                {
-                  text: userMessage,
-                },
-              ],
-            },
-          ],
-        },
-        {
-          headers: {
-            'Content-Type': 'application/json',
-          },
-        }
-      );
-  
-      // Extract the response data
-      const responseData = response.data;
-  
-      // Extract the 'text' from the 'parts' in the response content
-      const responseText = responseData.candidates[0]?.content?.parts[0]?.text || '';
-  
-      return responseText;
-    } catch (error) {
-      console.error('Error:', error.response ? error.response.data : error.message);
-      return error;
-    }
-  }
-  
-  export { gemini };
+  const res = await model.generateContent(prompt);
+  console.log(res.response.text());
+  return String(res.response.text());
+};
+
+export default gemini;

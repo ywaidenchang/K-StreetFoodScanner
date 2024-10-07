@@ -2,7 +2,7 @@ import { Image, Text, StyleSheet, View, ActivityIndicator } from 'react-native';
 import { useState } from 'react';
 import { useRoute } from "@react-navigation/native"
 import axios from 'axios';
-import { gemini } from '../scripts/geminiApi';
+import { GoogleGenerativeAI } from "@google/generative-ai";
 
 const InfoScreen = () => {
   const route = useRoute();
@@ -24,10 +24,15 @@ const InfoScreen = () => {
         "Content-Type": "application/x-www-form-urlencoded"
       }
     })
-    .then(function(response) {
+    .then(async function(response) {
       let name = JSON.stringify(response.data.predictions[0].class);
       setIsLoading(false);
       setResultName(name);
+      const genAI = new GoogleGenerativeAI("AIzaSyCh_rsJNWhFdPeK7ef7nNEBEVHxfSqwOdM");
+      const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
+
+      const res = await model.generateContent(name);
+      setDescription(res.response.text());
     })
     .catch(function(error) {
       let errorMsg = error.message;
@@ -65,7 +70,7 @@ const InfoScreen = () => {
         <View style={styles.container}>
           <Text style={styles.title}>{resultName==null ? "NO FOOD DETECTED" :  resultName.replace(/\"/gi, "")}</Text>
         </View>
-        <Text>{}</Text>
+        <Text>{description}</Text>
       </>
     );
   }
