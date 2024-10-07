@@ -28,11 +28,6 @@ const InfoScreen = () => {
       let name = JSON.stringify(response.data.predictions[0].class);
       setIsLoading(false);
       setResultName(name);
-      const genAI = new GoogleGenerativeAI("AIzaSyCh_rsJNWhFdPeK7ef7nNEBEVHxfSqwOdM");
-      const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
-
-      const res = await model.generateContent(name);
-      setDescription(res.response.text());
     })
     .catch(function(error) {
       let errorMsg = error.message;
@@ -42,6 +37,11 @@ const InfoScreen = () => {
   };
 
   predict(data);
+
+  const genAI = new GoogleGenerativeAI("AIzaSyCh_rsJNWhFdPeK7ef7nNEBEVHxfSqwOdM");
+  const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
+  const res = model.generateContent(name);
+  setDescription(res.response.text());
 
   if (isError || (isError==true && isLoading==true)) {
     return (
